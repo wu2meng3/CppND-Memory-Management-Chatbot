@@ -32,16 +32,11 @@ ChatLogic::ChatLogic()
 
 ChatLogic::~ChatLogic()
 {
-    // delete chatbot instance
-    delete _chatBot;
-
-
     // delete all edges
     for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
     {
         delete *it;
     }
-
 }
 
 template <typename T>

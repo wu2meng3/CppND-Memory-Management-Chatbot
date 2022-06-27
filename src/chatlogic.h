@@ -17,10 +17,9 @@ private:
     // data handles (owned)
     std::vector<std::unique_ptr<GraphNode>> _nodes;
 
-    
-    std::vector<GraphEdge *> _edges;
-
     // data handles (not owned)
+    // GraphEdges are owned by GraphNodes
+    std::vector<GraphEdge *> _edges;
     GraphNode *_currentNode;
     ChatBot *_chatBot;
     ChatBotPanelDialog *_panelDialog;

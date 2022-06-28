@@ -173,11 +173,13 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         }
     }
 
-    auto chatBot = std::make_unique<ChatBot>("../images/chatbot.png"); // ctor
-    chatBot->SetChatLogicHandle(this);
-    chatBot->SetRootNode(rootNode);
+    // ctor
+    ChatBot chatBot_stack("../images/chatbot.png");
+    chatBot_stack.SetChatLogicHandle(this);
+    chatBot_stack.SetRootNode(rootNode);
+    // move ctor
+    auto chatBot = std::make_unique<ChatBot>(std::move(chatBot_stack));
     _chatBot = chatBot.get();
-    // add chatbot to graph root node
     rootNode->MoveChatbotHere(std::move(chatBot)); // move ctor
 }
 

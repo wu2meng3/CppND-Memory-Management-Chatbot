@@ -14,20 +14,10 @@
 
 ChatLogic::ChatLogic()
 {
-    //// STUDENT CODE
-    ////
     _currentNode = nullptr;
     _chatBot = nullptr;
     _panelDialog = nullptr;
-
-    // create instance of chatbot
-    _chatBot = new ChatBot("../images/chatbot.png");
-
-    // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
-
-    ////
-    //// EOF STUDENT CODE
+    _chatBot = nullptr;
 }
 
 ChatLogic::~ChatLogic()
@@ -106,9 +96,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                     // node-based processing
                     if (type->second == "NODE")
                     {
-                        //// STUDENT CODE
-                        ////
-
                         // check if node with this ID exists already
                         auto newNode = std::find_if(_nodes.begin(), _nodes.end(), [&id](std::unique_ptr<GraphNode>& node) { return node->GetID() == id; });
 
@@ -121,9 +108,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             // add all answers to current node
                             AddAllTokensToElement("ANSWER", tokens, **newNode);
                         }
-
-                        ////
-                        //// EOF STUDENT CODE
                     }
 
                     // edge-based processing
@@ -189,9 +173,12 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         }
     }
 
+    auto chatBot = std::make_unique<ChatBot>("../images/chatbot.png"); // ctor
+    chatBot->SetChatLogicHandle(this);
+    chatBot->SetRootNode(rootNode);
+    _chatBot = chatBot.get();
     // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
+    rootNode->MoveChatbotHere(std::move(chatBot)); // move ctor
 }
 
 void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)

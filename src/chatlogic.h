@@ -22,6 +22,7 @@ private:
     std::vector<GraphEdge *> _edges;
     GraphNode *_currentNode;
     ChatBot *_chatBot;
+
     ChatBotPanelDialog *_panelDialog;
 
     // proprietary type definitions

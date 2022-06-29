@@ -177,10 +177,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     ChatBot chatBot_stack("../images/chatbot.png");
     chatBot_stack.SetChatLogicHandle(this);
     chatBot_stack.SetRootNode(rootNode);
-    // move ctor
-    auto chatBot = std::make_unique<ChatBot>(std::move(chatBot_stack));
-    _chatBot = chatBot.get();
-    rootNode->MoveChatbotHere(std::move(chatBot)); // move ctor
+    rootNode->MoveChatbotHere(std::move(chatBot_stack)); // move ctor
 }
 
 void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog)
